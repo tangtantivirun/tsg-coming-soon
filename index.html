@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We're Coming Soon</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%; height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #0d9eb5;
+  }
+  .bg {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 35%, #a8eaf5 0%, #4dd4ec 18%, #18b8d8 38%, #0d9ab8 58%, #0a7a96 80%, #075f77 100%);
+    z-index: 0;
+  }
+  .wave-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background:
+      radial-gradient(ellipse 100% 35% at 50% 8%, rgba(255,255,255,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 70% 40% at 75% 55%, rgba(100,230,245,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 30% at 20% 60%, rgba(80,210,235,0.15) 0%, transparent 55%);
+    animation: pulse 7s ease-in-out infinite alternate;
+  }
+  @keyframes pulse {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+  }
+  .surface-shimmer {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 30%;
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, transparent 100%);
+    animation: shimmer 5s ease-in-out infinite alternate;
+  }
+  @keyframes shimmer {
+    0% { opacity: 0.7; transform: scaleX(1); }
+    100% { opacity: 1; transform: scaleX(1.03); }
+  }
+  .light-beam {
+    position: fixed;
+    top: 0; bottom: 0;
+    transform-origin: top center;
+    z-index: 1;
+  }
+  .lb1 { left: 22%; width: 180px; background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 75%); transform: rotate(-12deg); animation: sway 9s ease-in-out infinite; }
+  .lb2 { left: 50%; width: 110px; background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 70%); transform: rotate(6deg); animation: sway 12s ease-in-out infinite reverse; }
+  .lb3 { left: 70%; width: 80px; background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 65%); transform: rotate(-4deg); animation: sway 8s ease-in-out infinite; }
+  @keyframes sway {
+    0%, 100% { transform: rotate(-12deg); }
+    50% { transform: rotate(-5deg); }
+  }
+  .particles { position: fixed; inset: 0; z-index: 2; overflow: hidden; pointer-events: none; }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.45);
+    border: 1.5px solid rgba(255,255,255,0.65);
+    animation: rise linear infinite;
+  }
+  .particle.bright {
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 0 10px 4px rgba(255,255,255,0.3);
+  }
+  @keyframes rise {
+    0% { transform: translateY(105vh) translateX(0) scale(0.3); opacity: 0; }
+    8% { opacity: 0.9; }
+    85% { opacity: 0.65; }
+    100% { transform: translateY(-8vh) translateX(18px) scale(1); opacity: 0; }
+  }
+  .content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: #fff;
+    padding: 2rem;
+    max-width: 720px;
+    width: 100%;
+  }
+  .logo-img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    margin: 0 auto 2.5rem;
+    display: block;
+  }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.35);
+    margin: 1.2rem auto;
+  }
+  h1 {
+    font-family: 'Arial Black', 'Arial', sans-serif;
+    font-size: clamp(2.2rem, 7vw, 3.8rem);
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    color: #ffffff;
+    text-shadow: 0 2px 24px rgba(0,120,150,0.4);
+    line-height: 1.1;
+  }
+  .sub {
+    font-size: clamp(1.7rem, 4vw, 2rem);
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.8;
+    margin: 1.4rem auto 0;
+    max-width: 380px;
+    font-family: 'Arial', sans-serif;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wave-overlay"></div>
+<div class="surface-shimmer"></div>
+<div class="light-beam lb1"></div>
+<div class="light-beam lb2"></div>
+<div class="light-beam lb3"></div>
+<div class="particles" id="particles"></div>
+
+<div class="content">
+  <img class="logo-img" src="TSG_Logo.png" alt="Logo">
+  <h1>THAI SALINE GROUP</h1>
+  <div class="divider"></div>
+  <p class="sub">Coming soon!</p>
+</div>
+
+<script>
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 45; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle' + (Math.random() > 0.75 ? ' bright' : '');
+    const size = Math.random() * 22 + 8;
+    p.style.cssText = `
+      width:${size}px;
+      height:${size}px;
+      left:${Math.random()*100}%;
+      animation-duration:${Math.random()*16+10}s;
+      animation-delay:${Math.random()*-22}s;
+      opacity:${Math.random()*0.5+0.3};
+    `;
+    container.appendChild(p);
+  }
+</script>
+</body>
+</html>
